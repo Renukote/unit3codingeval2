@@ -1,16 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
 </head>
-<body>
-    <label for="username">Enter username</label>
-    <input id ='username' type = 'text' placeholder="Enter username" name = "pass" />
 
-    <label for="pass">Enter password</label>
-    <input type="password" name="pass" id="pass" placeholder = 'Enter your password'/>
+<body>
+    <form id='form' onsubmit='createUser(event)'>
+        <input id='name' type='text' placeholder="Enter name" name="name" />
+        <input type="email" name="email" id="email" placeholder='enter your email' />
+        <input type="password" name="pass" id="pass" placeholder='Enter your password' />
+        <input id='username' type='text' placeholder="Enter username" name="pass" />
+        <input type="tel" name="mobile" id="mobile" placeholder="enter your mobile number" />
+        <input type="text" name="desc" id="desc" placeholder='description' />
+        <input type="submit" value="Sign up">
+    </form>
 </body>
+
 </html>
+
+
+<script>
+    async function createUser(e) {
+        e.preventDefault();
+        let form = document.getElementById('form');
+
+        let user = {
+            name: form.name.value,
+            email: form.email.value,
+            password: form.pass.value,
+            username: form.username.value,
+            mobile: form.mobile.value,
+            description: form.desc.value
+        }
+
+        let postData = JSON.stringify(user);
+        console.log(postData);
+
+        let res = await fetch("https://github.com/masai-school/api-mocker/auth/register", {
+            method: 'POST',
+            body: postData,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+
+        let out = await( res.json() );
+    }
+</script>
