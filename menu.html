@@ -24,14 +24,16 @@
     </style>
 </head>
 <body>
+    <button onclick = 'window.location.href = "./cart.html"' >Show cart</button>
     <div id = 'container'></div>
+
 </body>
 </html>
 
 <script>
+    localStorage.setItem('orderList',JSON.stringify([]));
     
     async function showMenu() {
-        
         for( i = 0; i < 5; i++ ) {
             let res = await fetch("http://www.themealdb.com/api/json/v1/1/random.php");
             let data = await res.json();
@@ -54,11 +56,32 @@
 
             let btn = document.createElement('button');
             btn.innerText = "Add to cart";
-            btn.onclick = "";
+            btn.onclick = function () { addToCart(image,desc,price); }
 
             div.append(img,name,bill,btn);
             container.append(div);
         }
     }
     showMenu();
+
+
+    function addToCart(image,desc,price) {
+        
+        let orderList = JSON.parse(localStorage.getItem('orderList'));
+
+        if( !orderList ) {
+            localStorage.setItem('orderList',JSON.stringify([]));
+            orderList = JSON.parse(localStorage.getItem('orderList'));
+        }
+
+        let meal = {
+            img: image,
+            name: desc,
+            bill: price
+        }
+        console.log(meal);
+
+        orderList.push(meal);
+        localStorage.setItem('orderList',JSON.stringify(orderList));
+    }
 </script>
