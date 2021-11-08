@@ -34,7 +34,7 @@
     localStorage.setItem('orderList',JSON.stringify([]));
     
     async function showMenu() {
-        for( i = 0; i < 5; i++ ) {
+        for( i = 0; i < 10; i++ ) {
             let res = await fetch("http://www.themealdb.com/api/json/v1/1/random.php");
             let data = await res.json();
             
@@ -79,9 +79,10 @@
             name: desc,
             bill: price
         }
-        console.log(meal);
 
         orderList.push(meal);
         localStorage.setItem('orderList',JSON.stringify(orderList));
+
+        alert('added');
     }
 </script>
