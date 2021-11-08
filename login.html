@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+
 <body>
-    <form id = 'form' onsubmit = 'logIn(event)'>
+    <form id='form' onsubmit='logIn(event)'>
         <label for="username">Enter username</label>
-        <input id ='username' type = 'text' placeholder="Enter username" name = "pass" />
-    
+        <input id='username' type='text' placeholder="Enter username" name="pass" />
+
         <label for="pass">Enter password</label>
-        <input type="password" name="password" id="password" placeholder = 'Enter your password'/>
+        <input type="password" name="password" id="password" placeholder='Enter your password' />
 
         <input type="submit" value="Log in" />
     </form>
 </body>
+
 </html>
 
 <script>
@@ -24,10 +27,35 @@
         e.preventDefault();
 
         let form = document.getElementById('form');
-    
-        console.log(form.username.value);
-        console.log(form.password.value);
+        let username = form.username.value;
 
-        let res = await fetch(`https://masai-api-mocker.herokuapp.com/auth/login`)
+        let obj = {
+            username: form.username.value,
+            password: form.password.value
+        }
+
+        let res = await fetch(`https://masai-api-mocker.herokuapp.com/auth/login`, {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        let out = await res.json();
+        let token = out.token;
+
+
+        let result = await fetch(`https://masai-api-mocker.herokuapp.com/user/${username}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+
+        let output = await result.json();
+        console.log(output);
+
+        if(output.name) alert("Logged in successfully");
+        else alert("Invalid credentials");
     }
 </script>
