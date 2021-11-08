@@ -7,10 +7,27 @@
     <title>Login</title>
 </head>
 <body>
-    <label for="username">Enter username</label>
-    <input id ='username' type = 'text' placeholder="Enter username" name = "pass" />
+    <form id = 'form' onsubmit = 'logIn(event)'>
+        <label for="username">Enter username</label>
+        <input id ='username' type = 'text' placeholder="Enter username" name = "pass" />
+    
+        <label for="pass">Enter password</label>
+        <input type="password" name="password" id="password" placeholder = 'Enter your password'/>
 
-    <label for="pass">Enter password</label>
-    <input type="password" name="pass" id="pass" placeholder = 'Enter your password'/>
+        <input type="submit" value="Log in" />
+    </form>
 </body>
 </html>
+
+<script>
+    async function logIn(e) {
+        e.preventDefault();
+
+        let form = document.getElementById('form');
+    
+        console.log(form.username.value);
+        console.log(form.password.value);
+
+        let res = await fetch(`https://masai-api-mocker.herokuapp.com/auth/login`)
+    }
+</script>

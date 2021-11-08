@@ -12,7 +12,7 @@
     <form id='form' onsubmit='createUser(event)'>
         <input id='name' type='text' placeholder="Enter name" name="name" />
         <input type="email" name="email" id="email" placeholder='enter your email' />
-        <input type="password" name="pass" id="pass" placeholder='Enter your password' />
+        <input type="password" name="password" id="password" placeholder='Enter your password' />
         <input id='username' type='text' placeholder="Enter username" name="pass" />
         <input type="tel" name="mobile" id="mobile" placeholder="enter your mobile number" />
         <input type="text" name="desc" id="desc" placeholder='description' />
@@ -31,7 +31,7 @@
         let user = {
             name: form.name.value,
             email: form.email.value,
-            password: form.pass.value,
+            password: form.password.value,
             username: form.username.value,
             mobile: form.mobile.value,
             description: form.desc.value
@@ -40,7 +40,7 @@
         let postData = JSON.stringify(user);
         console.log(postData);
 
-        let res = await fetch("https://github.com/masai-school/api-mocker/auth/register", {
+        let res = await fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
             method: 'POST',
             body: postData,
             headers: {
@@ -49,5 +49,9 @@
         })
 
         let out = await( res.json() );
+        console.log(out);
+
+        if(out.message == "Registration Success") alert("successfully registered");
+        else alert("registration failed");
     }
 </script>
