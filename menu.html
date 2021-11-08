@@ -5,24 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #container {
+            display:flex;
+        }
+
+        #container > div {
+            width:300px;
+            height:200px;
+            border:1px solid blue;
+            margin:20px;
+        }
+
+        #container img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-    <div class = 'container'></div>
+    <div id = 'container'></div>
 </body>
 </html>
 
 <script>
-    let container = document.getElementById('container');
-
+    
     async function showMenu() {
+        
         for( i = 0; i < 5; i++ ) {
             let res = await fetch("http://www.themealdb.com/api/json/v1/1/random.php");
-            let out = await res.json();
+            let data = await res.json();
+            
+            let image = data.meals[0].strMealThumb;
+            let desc = data.meals[0].strMeal;
+            let price = `$ 1500`;
+            
+            let container = document.getElementById('container');
+            let div = document.createElement('div');
 
-            console.log(out.meals[0]);
-            let img = out.meals[0].strMealThumb;
-            let desc = out.meals[0].strMeal;
+            let img = document.createElement('img');
+            img.src = image;
 
+            let name = document.createElement('h3');
+            name.innerText = desc;
+
+            let bill = document.createElement('h4');
+            bill.innerText = price;
+
+            let btn = document.createElement('button');
+            btn.innerText = "Add to cart";
+            btn.onclick = "";
+
+            div.append(img,name,bill,btn);
+            container.append(div);
         }
     }
     showMenu();
